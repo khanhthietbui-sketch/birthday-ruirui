@@ -1,0 +1,259 @@
+/* === 基础 === */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  min-height:100vh;
+  background:linear-gradient(175deg, #0b1026 0%, #0f1a3a 30%, #162044 50%, #0d1530 100%);
+  font-family:'Noto Serif SC',serif;
+  color:#e8e0d4;
+  overflow-x:hidden;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:60px 0 40px;
+  position:relative;
+}
+
+/* === 星空 === */
+.stars {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  pointer-events:none; z-index:0;
+}
+.star {
+  position:absolute;
+  background:#fff;
+  border-radius:50%;
+  animation:twinkle var(--dur) ease-in-out infinite alternate;
+}
+@keyframes twinkle {
+  0% { opacity:0.15; transform:scale(0.8); }
+  100% { opacity:1; transform:scale(1.2); }
+}
+
+/* === 萤火虫 === */
+.firefly {
+  position:fixed;
+  width:4px; height:4px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:1;
+  animation:fireflyMove var(--fly-dur) ease-in-out infinite alternate, fireflyGlow var(--glow-dur) ease-in-out infinite;
+}
+@keyframes fireflyMove {
+  0% { transform:translate(0, 0); }
+  25% { transform:translate(var(--dx1), var(--dy1)); }
+  50% { transform:translate(var(--dx2), var(--dy2)); }
+  75% { transform:translate(var(--dx3), var(--dy3)); }
+  100% { transform:translate(var(--dx4), var(--dy4)); }
+}
+@keyframes fireflyGlow {
+  0%, 100% { opacity:0.1; box-shadow:0 0 2px rgba(200,230,120,0.3); }
+  50% { opacity:1; box-shadow:0 0 12px rgba(200,230,120,0.8), 0 0 24px rgba(180,220,100,0.4); }
+}
+
+/* === 流星 === */
+.shooting-star {
+  position:fixed;
+  width:2px; height:2px;
+  background:#fff;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:1;
+  opacity:0;
+  animation:shoot var(--shoot-dur) var(--shoot-delay) linear infinite;
+}
+.shooting-star::after {
+  content:'';
+  position:absolute;
+  top:0; right:0;
+  width:50px; height:1px;
+  background:linear-gradient(to left, rgba(255,255,255,0.6), transparent);
+  transform:rotate(var(--tail-angle));
+  transform-origin:right center;
+}
+@keyframes shoot {
+  0% { opacity:0; transform:translate(0,0); }
+  5% { opacity:1; }
+  70% { opacity:1; }
+  100% { opacity:0; transform:translate(var(--shoot-x), var(--shoot-y)); }
+}
+
+/* === 热浪 === */
+.heat-glow {
+  position:fixed;
+  bottom:0; left:0; width:100%; height:30vh;
+  background:linear-gradient(to top, rgba(40,25,60,0.4), transparent);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* === 月亮 === */
+.moon-container {
+  position:relative; z-index:1;
+  margin-bottom:40px;
+  animation:float 6s ease-in-out infinite;
+  cursor:pointer;
+}
+@keyframes float {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-12px); }
+}
+.moon {
+  width:80px; height:80px;
+  border-radius:50%;
+  background:transparent;
+  box-shadow:15px -10px 0 0 #f0e6c0, 15px -10px 30px rgba(240,230,192,0.3), 15px -10px 60px rgba(240,230,192,0.15);
+  position:relative;
+  transition:box-shadow 0.6s;
+}
+
+/* === 内容 === */
+.content {
+  position:relative; z-index:1;
+  text-align:center;
+  padding:0 30px;
+  max-width:600px;
+}
+.date-label {
+  font-size:13px;
+  color:#7a8aaa;
+  letter-spacing:6px;
+  margin-bottom:16px;
+  opacity:0;
+  animation:fadeUp 1s 0.5s forwards;
+}
+.title {
+  font-size:30px;
+  font-weight:700;
+  color:#c8daf0;
+  margin-bottom:30px;
+  opacity:0;
+  animation:fadeUp 1s 0.8s forwards;
+  text-shadow:0 0 40px rgba(160,190,240,0.25);
+}
+.letter {
+  font-size:15px;
+  line-height:2.2;
+  color:#b8c0d0;
+  text-align:left;
+  opacity:0;
+  animation:fadeUp 1.2s 1.2s forwards;
+  position:relative;
+  padding:30px;
+  border:1px solid rgba(160,190,240,0.1);
+  border-radius:12px;
+  background:rgba(20,30,60,0.5);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.letter p { margin-bottom:16px; }
+.letter .sign {
+  text-align:right;
+  color:#8aacda;
+  margin-top:24px;
+  margin-bottom:0;
+  font-size:17px;
+}
+@keyframes fadeUp {
+  0% { opacity:0; transform:translateY(20px); }
+  100% { opacity:1; transform:translateY(0); }
+}
+
+.footer {
+  position:relative; z-index:1;
+  margin-top:50px;
+  font-size:13px;
+  color:#3a4a68;
+  letter-spacing:3px;
+  opacity:0;
+  animation:fadeUp 1s 2s forwards;
+  cursor:pointer;
+}
+
+/* === 温度 === */
+.temp-tag {
+  position:fixed;
+  bottom:20px; right:20px;
+  font-size:11px;
+  color:#4a5a78;
+  letter-spacing:2px;
+  z-index:2;
+  opacity:0;
+  animation:fadeUp 1s 3s forwards;
+}
+
+/* === 彩蛋弹窗 === */
+.egg-overlay {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(5,10,25,0.85);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity 0.4s;
+}
+.egg-overlay.show {
+  display:flex;
+  opacity:1;
+}
+.egg-card {
+  max-width:340px;
+  padding:36px 28px;
+  text-align:center;
+  color:#c8d0e0;
+  font-size:15px;
+  line-height:2;
+  animation:fadeUp 0.6s forwards;
+}
+.egg-card .egg-title {
+  font-size:13px;
+  color:#5a6a88;
+  letter-spacing:4px;
+  margin-bottom:18px;
+}
+.egg-card .egg-text {
+  font-size:15px;
+  color:#9aaabe;
+  line-height:2;
+}
+.egg-card .egg-close {
+  margin-top:24px;
+  font-size:12px;
+  color:#4a5a70;
+  cursor:pointer;
+  letter-spacing:2px;
+}
+
+/* === 连击计数 === */
+.tap-counter {
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  font-size:60px;
+  font-weight:700;
+  color:rgba(200,220,250,0.15);
+  pointer-events:none;
+  z-index:50;
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.tap-counter.visible { opacity:1; }
+
+/* === 涟漪 === */
+.ripple {
+  position:fixed;
+  border-radius:50%;
+  border:1px solid rgba(160,200,240,0.3);
+  pointer-events:none;
+  z-index:3;
+  animation:rippleOut 0.8s ease-out forwards;
+}
+@keyframes rippleOut {
+  0% { width:0; height:0; opacity:0.6; transform:translate(-50%,-50%); }
+  100% { width:120px; height:120px; opacity:0; transform:translate(-50%,-50%); }
+}
