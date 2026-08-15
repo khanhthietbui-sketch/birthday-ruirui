@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>蕊蕊 - 农历八月十六</title>
+<title>蕊蕊 生日快乐</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
 
@@ -11,7 +11,7 @@
 
   body {
     min-height:100vh;
-    background:#0a0a0f;
+    background:linear-gradient(175deg, #0b1026 0%, #0f1a3a 30%, #162044 50%, #0d1530 100%);
     font-family:'Noto Serif SC',serif;
     color:#e8e0d4;
     overflow-x:hidden;
@@ -20,8 +20,10 @@
     align-items:center;
     justify-content:center;
     padding:60px 0 40px;
+    position:relative;
   }
 
+  /* 星空 */
   .stars {
     position:fixed; top:0; left:0; width:100%; height:100%;
     pointer-events:none; z-index:0;
@@ -33,10 +35,68 @@
     animation:twinkle var(--dur) ease-in-out infinite alternate;
   }
   @keyframes twinkle {
-    0% { opacity:0.2; transform:scale(0.8); }
+    0% { opacity:0.15; transform:scale(0.8); }
     100% { opacity:1; transform:scale(1.2); }
   }
 
+  /* 萤火虫 */
+  .firefly {
+    position:fixed;
+    width:4px; height:4px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:1;
+    animation:fireflyMove var(--fly-dur) ease-in-out infinite alternate, fireflyGlow var(--glow-dur) ease-in-out infinite;
+  }
+  @keyframes fireflyMove {
+    0% { transform:translate(0, 0); }
+    25% { transform:translate(var(--dx1), var(--dy1)); }
+    50% { transform:translate(var(--dx2), var(--dy2)); }
+    75% { transform:translate(var(--dx3), var(--dy3)); }
+    100% { transform:translate(var(--dx4), var(--dy4)); }
+  }
+  @keyframes fireflyGlow {
+    0%, 100% { opacity:0.1; box-shadow:0 0 2px rgba(200,230,120,0.3); }
+    50% { opacity:1; box-shadow:0 0 12px rgba(200,230,120,0.8), 0 0 24px rgba(180,220,100,0.4); }
+  }
+
+  /* 流星 */
+  .shooting-star {
+    position:fixed;
+    width:2px; height:2px;
+    background:#fff;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:1;
+    opacity:0;
+    animation:shoot var(--shoot-dur) var(--shoot-delay) linear infinite;
+  }
+  .shooting-star::after {
+    content:'';
+    position:absolute;
+    top:0; right:0;
+    width:50px; height:1px;
+    background:linear-gradient(to left, rgba(255,255,255,0.6), transparent);
+    transform:rotate(var(--tail-angle));
+    transform-origin:right center;
+  }
+  @keyframes shoot {
+    0% { opacity:0; transform:translate(0,0); }
+    5% { opacity:1; }
+    70% { opacity:1; }
+    100% { opacity:0; transform:translate(var(--shoot-x), var(--shoot-y)); }
+  }
+
+  /* 夏夜热浪微光 - 底部 */
+  .heat-glow {
+    position:fixed;
+    bottom:0; left:0; width:100%; height:30vh;
+    background:linear-gradient(to top, rgba(40,25,60,0.4), transparent);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* 月亮 - 夏夜弯月 */
   .moon-container {
     position:relative; z-index:1;
     margin-bottom:40px;
@@ -44,77 +104,15 @@
   }
   @keyframes float {
     0%,100% { transform:translateY(0); }
-    50% { transform:translateY(-15px); }
+    50% { transform:translateY(-12px); }
   }
   .moon {
-    width:120px; height:120px;
+    width:80px; height:80px;
     border-radius:50%;
-    background:radial-gradient(circle at 35% 35%, #fff8e7, #f0d890, #d4a843);
-    box-shadow:0 0 60px rgba(240,216,144,0.4), 0 0 120px rgba(240,216,144,0.2);
+    background:transparent;
+    box-shadow:15px -10px 0 0 #f0e6c0, 15px -10px 30px rgba(240,230,192,0.3), 15px -10px 60px rgba(240,230,192,0.15);
     position:relative;
   }
-  .moon::after {
-    content:'';
-    position:absolute;
-    width:20px; height:20px;
-    background:rgba(200,170,100,0.3);
-    border-radius:50%;
-    top:30px; left:50px;
-  }
-  .moon::before {
-    content:'';
-    position:absolute;
-    width:14px; height:14px;
-    background:rgba(200,170,100,0.25);
-    border-radius:50%;
-    top:60px; left:30px;
-  }
-
-  .lanterns {
-    position:fixed; top:0; left:0; width:100%; height:80px;
-    display:flex; justify-content:space-around;
-    pointer-events:none; z-index:2;
-  }
-  .lantern {
-    width:36px;
-    animation:sway 3s ease-in-out infinite;
-    transform-origin:top center;
-  }
-  .lantern-body {
-    width:36px; height:48px;
-    background:radial-gradient(ellipse, #ff4444, #cc0000);
-    border-radius:50%;
-    margin-top:12px;
-    box-shadow:0 0 20px rgba(255,60,60,0.5);
-    position:relative;
-  }
-  .lantern-body::before {
-    content:'';
-    position:absolute;
-    top:-6px; left:50%; transform:translateX(-50%);
-    width:20px; height:8px;
-    background:#aa0000;
-    border-radius:3px;
-  }
-  .lantern-string {
-    width:2px; height:14px;
-    background:#aa0000;
-    margin:0 auto;
-  }
-  .lantern-tassel {
-    width:4px; height:18px;
-    background:linear-gradient(#ff4444, #cc0000);
-    margin:0 auto;
-    border-radius:0 0 2px 2px;
-  }
-  @keyframes sway {
-    0%,100% { transform:rotate(-5deg); }
-    50% { transform:rotate(5deg); }
-  }
-  .lantern:nth-child(2) { animation-delay:-1s; }
-  .lantern:nth-child(3) { animation-delay:-2s; }
-  .lantern:nth-child(4) { animation-delay:-0.5s; }
-  .lantern:nth-child(5) { animation-delay:-1.5s; }
 
   .content {
     position:relative; z-index:1;
@@ -123,44 +121,46 @@
     max-width:600px;
   }
   .date-label {
-    font-size:14px;
-    color:#a09080;
+    font-size:13px;
+    color:#7a8aaa;
     letter-spacing:6px;
     margin-bottom:16px;
     opacity:0;
     animation:fadeUp 1s 0.5s forwards;
   }
   .title {
-    font-size:32px;
+    font-size:30px;
     font-weight:700;
-    color:#f0d890;
+    color:#c8daf0;
     margin-bottom:30px;
     opacity:0;
     animation:fadeUp 1s 0.8s forwards;
-    text-shadow:0 0 30px rgba(240,216,144,0.3);
+    text-shadow:0 0 40px rgba(160,190,240,0.25);
   }
   .letter {
-    font-size:16px;
+    font-size:15px;
     line-height:2.2;
-    color:#d0c8b8;
+    color:#b8c0d0;
     text-align:left;
     opacity:0;
     animation:fadeUp 1.2s 1.2s forwards;
     position:relative;
     padding:30px;
-    border:1px solid rgba(240,216,144,0.15);
+    border:1px solid rgba(160,190,240,0.1);
     border-radius:12px;
-    background:rgba(240,216,144,0.03);
+    background:rgba(20,30,60,0.5);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
   }
   .letter p {
     margin-bottom:16px;
   }
   .letter .sign {
     text-align:right;
-    color:#f0d890;
+    color:#8aacda;
     margin-top:24px;
     margin-bottom:0;
-    font-size:18px;
+    font-size:17px;
   }
 
   @keyframes fadeUp {
@@ -172,47 +172,38 @@
     position:relative; z-index:1;
     margin-top:50px;
     font-size:13px;
-    color:#605848;
+    color:#3a4a68;
     letter-spacing:3px;
     opacity:0;
     animation:fadeUp 1s 2s forwards;
   }
 
-  .petal {
+  /* 温度标签 */
+  .temp-tag {
     position:fixed;
-    width:8px; height:8px;
-    background:radial-gradient(ellipse, rgba(240,180,180,0.8), rgba(240,180,180,0));
-    border-radius:50% 0 50% 0;
-    pointer-events:none;
-    z-index:1;
-    animation:fall linear infinite;
-  }
-  @keyframes fall {
-    0% { transform:translateY(-10vh) rotate(0deg); opacity:0.8; }
-    100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
+    bottom:20px; right:20px;
+    font-size:11px;
+    color:#4a5a78;
+    letter-spacing:2px;
+    z-index:2;
+    opacity:0;
+    animation:fadeUp 1s 3s forwards;
   }
 </style>
 </head>
 <body>
 
 <div class="stars" id="stars"></div>
-
-<div class="lanterns">
-  <div class="lantern"><div class="lantern-string"></div><div class="lantern-body"></div><div class="lantern-tassel"></div></div>
-  <div class="lantern"><div class="lantern-string"></div><div class="lantern-body"></div><div class="lantern-tassel"></div></div>
-  <div class="lantern"><div class="lantern-string"></div><div class="lantern-body"></div><div class="lantern-tassel"></div></div>
-  <div class="lantern"><div class="lantern-string"></div><div class="lantern-body"></div><div class="lantern-tassel"></div></div>
-  <div class="lantern"><div class="lantern-string"></div><div class="lantern-body"></div><div class="lantern-tassel"></div></div>
-</div>
-
-<div id="petals"></div>
+<div class="heat-glow"></div>
+<div id="fireflies"></div>
+<div id="shooting-stars"></div>
 
 <div class="moon-container">
   <div class="moon"></div>
 </div>
 
 <div class="content">
-  <div class="date-label">农 历 八 月 十 六</div>
+  <div class="date-label">成 都 夏 夜</div>
   <div class="title">蕊蕊 生日快乐</div>
   <div class="letter">
     <p>蕊蕊，</p>
@@ -231,32 +222,63 @@
 </div>
 
 <div class="footer">挚 & 蕊蕊</div>
+<div class="temp-tag">33C / 成都</div>
 
 <script>
+  // 星星
   var starsEl = document.getElementById('stars');
-  for (var i = 0; i < 80; i++) {
+  for (var i = 0; i < 100; i++) {
     var s = document.createElement('div');
     s.className = 'star';
-    var size = Math.random() * 2.5 + 0.5;
+    var size = Math.random() * 2 + 0.5;
     s.style.width = size + 'px';
     s.style.height = size + 'px';
-    s.style.top = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 70 + '%';
     s.style.left = Math.random() * 100 + '%';
     s.style.setProperty('--dur', (Math.random() * 3 + 2) + 's');
     s.style.animationDelay = Math.random() * 5 + 's';
     starsEl.appendChild(s);
   }
 
-  var petalsEl = document.getElementById('petals');
-  for (var j = 0; j < 15; j++) {
-    var p = document.createElement('div');
-    p.className = 'petal';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDuration = (Math.random() * 6 + 6) + 's';
-    p.style.animationDelay = Math.random() * 8 + 's';
-    p.style.width = (Math.random() * 6 + 5) + 'px';
-    p.style.height = (Math.random() * 6 + 5) + 'px';
-    petalsEl.appendChild(p);
+  // 萤火虫
+  var firefliesEl = document.getElementById('fireflies');
+  for (var j = 0; j < 20; j++) {
+    var f = document.createElement('div');
+    f.className = 'firefly';
+    var hue = 60 + Math.random() * 40;
+    f.style.background = 'hsl(' + hue + ', 70%, 65%)';
+    f.style.top = (30 + Math.random() * 60) + '%';
+    f.style.left = Math.random() * 100 + '%';
+    f.style.setProperty('--fly-dur', (8 + Math.random() * 12) + 's');
+    f.style.setProperty('--glow-dur', (2 + Math.random() * 3) + 's');
+    f.style.setProperty('--dx1', (Math.random() * 80 - 40) + 'px');
+    f.style.setProperty('--dy1', (Math.random() * 60 - 30) + 'px');
+    f.style.setProperty('--dx2', (Math.random() * 100 - 50) + 'px');
+    f.style.setProperty('--dy2', (Math.random() * 80 - 40) + 'px');
+    f.style.setProperty('--dx3', (Math.random() * 60 - 30) + 'px');
+    f.style.setProperty('--dy3', (Math.random() * 50 - 25) + 'px');
+    f.style.setProperty('--dx4', (Math.random() * 90 - 45) + 'px');
+    f.style.setProperty('--dy4', (Math.random() * 70 - 35) + 'px');
+    f.style.animationDelay = Math.random() * 8 + 's, ' + Math.random() * 3 + 's';
+    var w = 2 + Math.random() * 3;
+    f.style.width = w + 'px';
+    f.style.height = w + 'px';
+    firefliesEl.appendChild(f);
+  }
+
+  // 流星
+  var shootEl = document.getElementById('shooting-stars');
+  for (var k = 0; k < 3; k++) {
+    var ss = document.createElement('div');
+    ss.className = 'shooting-star';
+    ss.style.top = Math.random() * 30 + '%';
+    ss.style.left = (20 + Math.random() * 60) + '%';
+    ss.style.setProperty('--shoot-dur', (1 + Math.random() * 1.5) + 's');
+    ss.style.setProperty('--shoot-delay', (k * 5 + Math.random() * 8) + 's');
+    ss.style.setProperty('--shoot-x', (120 + Math.random() * 80) + 'px');
+    ss.style.setProperty('--shoot-y', (80 + Math.random() * 60) + 'px');
+    ss.style.setProperty('--tail-angle', (25 + Math.random() * 20) + 'deg');
+    shootEl.appendChild(ss);
   }
 </script>
 </body>
